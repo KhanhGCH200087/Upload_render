@@ -10,7 +10,7 @@ var bcrypt = require('bcryptjs');
 var salt = 8;                     //random value
 
 router.get('/login', async(req, res) => {
-   res.render('auth/login');
+   res.render('index');
 })
 
 router.post('/login', async (req, res) => {
