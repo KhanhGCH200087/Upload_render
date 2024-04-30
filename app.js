@@ -56,7 +56,10 @@ var database = "mongodb+srv://GCH200087:1@cluster0.tkcln.mongodb.net/BusIoT";
 mongoose.connect(database)
   .then(() => console.log('connect to db sucess'))
   .catch((err) => console.log('connect to db fail' + err));
-
+  
+  const PORT = process.env.PORT || 8000
+  app.listen(PORT) 
+  console.log("Server is running " + PORT)
 //2. config body-parser library (get data from client-side)
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
