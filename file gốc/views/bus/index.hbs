@@ -1,0 +1,16 @@
+<h1>Bus</h1>
+<table border = 1>
+    <a href="">Add</a>
+    {{#each busList}}
+    <tr>
+        <td>{{ plate }}</td>
+        <td>{{ seats }}</td>
+        <td><img src="data:image/jpeg;base64,{{picture}}" alt="Address Image" style="max-width: 100px;"></td>
+        <td>
+            <a href="/bus/edit/{{_id}}">Edit</a>
+            <a href="/bus/delete/{{_id}}"
+            onclick="return confirm('Do you want to delete ? {{plate}}')" ;>Delete</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>

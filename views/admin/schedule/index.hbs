@@ -1,0 +1,65 @@
+
+    <div class="container-xl">
+        <div class="table-responsive">   
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>Schedule data</b></h2>
+                            {{#if message}}
+                                <h4><b>{{message}}</b></h4>
+                            {{/if}}
+                        </div>
+                        <div class="col-sm-6">
+                                <a href="/schedule/add" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Add New Bus</span></a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Class</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each scheduleList}}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{name}}</td>
+                                <td><span class="birth-date">{{date}}</span></td>
+                                <td>{{classes.name}}</td>
+                                <td>
+                                    <a href="/schedule/edit/{{_id}}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="/schedule/delete/{{_id}}" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+    </div>
+  
+    <script>
+        // Function to format date
+        function formatDate(dateString) {
+            var birthDate = new Date(dateString);
+            return birthDate.toLocaleDateString("en-US", {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Loop through all elements with class "birth-date" and format the date
+        document.querySelectorAll('.birth-date').forEach(function(element) {
+            var formattedDate = formatDate(element.innerText);
+            element.innerText = formattedDate;
+        });
+    </script>
+

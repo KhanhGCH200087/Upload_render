@@ -1,0 +1,51 @@
+
+        <div class="container-xl">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2><b>List of Journey</b></h2>
+                                {{#if message}}
+                                    <h6><b>{{message}}</b></h6>
+                                {{/if}}
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="/journey/add" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Add New Journey</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>Name</th>
+                                <th>Bus</th>
+                                <th>Driver</th>
+                                <th>Schedule</th>
+                                <th>GPS</th>
+                                <th>RFID</th>
+                            </tr>
+                        </thead>
+                        <tbody>		
+                            {{#each journeyList}}
+                                <tr>
+                                    <td></td>
+                                    <td><h6>{{ name }}</h6></td>
+                                    <td><h6>{{bus.plate}}</h6></td>
+                                    <td><h6>{{driver.name}}</h6></td>
+                                    <td><h6>{{schedule.name}}</h6></td>
+                                    <td><h6>{{gps.device}}</h6></td>
+                                    <td><h6>{{rfid.device}}</h6></td>
+                                    <td>
+                                        <a href="/journey/edit/{{_id}}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                        <a href="/journey/delete/{{_id}}" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                        <a href="/journey/location/{{_id}}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    </td>
+                                </tr> 
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>        
+        </div>

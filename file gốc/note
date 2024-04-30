@@ -1,0 +1,131 @@
+// const GPSModel = require('./models/GPSModel');
+// const RFIDModel = require('./models/RFIDModel');
+// const historyRFIDModel = require('./models/historyRFIDModel');
+// const StudentModel = require('./models/StudentModel');
+// const HistoryModel = require('./models/HistoryModel');
+
+// const rfidData = db.ref('/RFID');
+
+// historyRFIDModel.find().then(historyRFIDDocs => {
+//     historyRFIDDocs.forEach(historyRFIDDoc => {
+//         // Check if the object ID exists in historyRFID
+//         if (historyRFIDDoc) {
+//             // Find RFID data using the object ID from historyRFID
+//             RFIDModel.findOne({ _id: historyRFIDDoc.rfid })
+//                 .then(rfidData => {
+//                     if (rfidData) {
+//                         // Find student data using the RFID data
+//                         StudentModel.findOne({ rfid: rfidData.data })
+//                             .then(studentData => {
+//                                 // Create a new entry in HistoryModel
+//                                 const newHistoryEntry = new HistoryModel({
+//                                     student: studentData._id,
+//                                     latitude: rfidData.latitude, // Assuming 'latitude' is a field in RFIDModel
+//                                     longitude: rfidData.longitude, // Assuming 'longitude' is a field in RFIDModel
+//                                     date: new Date(),
+//                                     time: new Date()
+//                                 });
+//                                 return newHistoryEntry.save();
+//                             })
+//                             .then(() => console.log('New history entry created'))
+//                             .catch(err => console.error('Error finding student data:', err));
+//                     }
+//                 })
+//                 .catch(err => console.error('Error finding RFID data:', err));
+//         }
+//     });
+// })
+// .catch(err => console.error('Error finding historyRFID documents:', err));
+
+// rfidData.on('child_changed', (snapshot) => {
+//     const rfidData = snapshot.val();
+//     const deviceName = snapshot.key;
+//     const rfidValue = rfidData.rfid_data;
+  
+//     // Check if RFID exists in historyRFIDModel
+//     historyRFIDModel.findOne({ data: rfidValue })
+//       .then((existingRFID) => {
+//         if (existingRFID) {
+//           // Find student data using RFID
+//           return StudentModel.findOne({ RFID: rfidValue });
+//         } else {
+//           console.log('RFID not found in historyRFIDModel.');
+//           return null; // Returning null to skip the next .then() block
+//         }
+//       })
+//       .then((studentData) => {
+//         if (studentData) {
+//           // Create new history entry
+//           const newHistoryEntry = new HistoryModel({
+//             student: studentData._id,
+//             latitude: locationdata.latitude, // Assuming `locationdata` is defined
+//             longitude: locationdata.longitude, // Assuming `locationdata` is defined
+//             date: new Date(),
+//             time: new Date(),
+//           });
+  
+//           return newHistoryEntry.save();
+//         } else {
+//           console.log('Student data not found for RFID:', rfidValue);
+//           return null; // Returning null to skip the next .then() block
+//         }
+//       })
+//       .then((result) => {
+//         if (result) {
+//           console.log('New history entry created successfully.');
+//         }
+//       })
+//       .catch((error) => {
+//         console.error('Error processing RFID data:', error);
+//       });
+//   });
+  
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+const axios = require('axios');
+require('dotenv').config()
+const cors = require('cors')
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+var busRouter = require('./routes/bus');
+var app = express();
+var mongoose = require('mongoose');
+var database = "mongodb://127.0.0.1:27017/BusIoT-Ver03";
+mongoose.connect(database)
+  .then(() => console.log('connect to db sucess'))
+  .catch((err) => console.log('connect to db fail' + err));
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:false}));
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+app.use(logger('dev'));
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+//------------------------------------------------------------------
+//3B. declare web URL of router
+app.use('/bus', busRouter);
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+module.exports = app;

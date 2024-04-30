@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+    <script src="http://maps.google.com/maps/api/js?sensor=false" 
+            type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <link rel='stylesheet' href='/stylesheets/indexPage.css' />
+</head> 
+<body>
+    <div class="container-xl">
+            <div class="table-responsive">
+                {{#if message}}
+                    <h4><b>{{message}}</b></h4>     
+                {{/if}}
+                <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>Student List</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Student's Image</th>
+                            <th>Supervisor</th>
+                            <th>Contact</th>
+                            <th>Supervisor's Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each studentList}}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{name}}</td>
+                                <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
+                                <td>{{supervisor.name}}</td>
+                                <td>{{supervisor.contact}}</td>
+                                <td><img src="data:image/jpeg;base64,{{supervisor.picture}}" style="max-width: 150px;"></td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                </div>
+                <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>Schedule data</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each scheduleList}}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{name}}</td>
+                                <td><span class="birth-date">{{date}}</span></td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            </div>        
+        </div>
+  
+
+  <script>
+        // Format birth date and insert it into the corresponding <span> element
+        var birthDate = new Date("{{scheduleData.date}}");
+        var formattedBirthDate = birthDate.toLocaleDateString("en-US", {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+        document.querySelector('.birth-date').innerText = formattedBirthDate;
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+    <div class="container-lg">
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="contact-form">
+                    <h1>Enter Student Data</h1>
+                    {{#if InputErrors}}
+                        <div>
+                            <p>Please correct the following errors:</p>
+                            <ul>
+                                {{#each InputErrors}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                    {{#if message}}
+                        <p>{{message}}</p>
+                    {{/if}}
+                    <form action="" method="post" enctype="multipart/form-data"> 
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" name="name" value="{{ studentData.name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">RFID</label>
+                            <input type="text" id="contact" class="form-control" name="RFID" value="{{ studentData.RFID }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label><br>
+                            <label><input type="radio" name="gender" value="Male" {{#if studentData.gender}}{{#ifCond studentData.gender '===' 'Male'}}checked{{/ifCond}}{{/if}}>Male</label><br>
+                            <label><input type="radio" name="gender" value="Female" {{#if studentData.gender}}{{#ifCond studentData.gender '===' 'Female'}}checked{{/ifCond}}{{/if}}>Female</label><br>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="picture">File</label>
+                                    <input type="file" id="picture" class="form-control" name="picture" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <img src="data:image/jpeg;base64,{{studentData.picture}}" style="max-width: 200px;">
+                            </div>              
+                        </div>      
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+

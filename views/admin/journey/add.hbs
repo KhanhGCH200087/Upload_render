@@ -1,0 +1,105 @@
+
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <div class="contact-form">
+                        <h1>Enter Journey Detail</h1>
+                        {{#if InputErrors}}
+                            <div>
+                                <p>Please correct the following errors:</p>
+                                <ul>
+                                    {{#each InputErrors}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        {{/if}}
+                        {{#if message}}
+                           <p>{{message}}</p>
+                        {{/if}}
+
+                        <form action="/journey/add" method="post" > 
+                            <div class="form-group">
+                                <label for="inputSubject">Name</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">Bus</label>
+                                        <label>&nbsp;&nbsp;</label>
+                                        <select name="bus" id="">
+                                            {{#each busList }}
+                                            <option value="{{_id}}">
+                                                {{ plate }}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">Driver</label>
+                                        <label>&nbsp;&nbsp;</label>
+                                        <select name="driver" id="">
+                                            {{#each driverList }}
+                                            <option value="{{_id}}">
+                                                {{ name }}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>        
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">Schedule</label>
+                                        <label>&nbsp;&nbsp;</label>
+                                        <select name="schedule" id="">
+                                            {{#each scheduleList }}
+                                            <option value="{{_id}}">
+                                                {{ name }}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>            
+                            </div> 
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="Device">Choosing Device</label>
+                                    </div>
+                                </div>  
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">GPS</label>
+                                        <label>&nbsp;&nbsp;</label>
+                                        <select name="gps" id="">
+                                            {{#each gpsList }}
+                                            <option value="{{_id}}">
+                                                {{ device }}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>   
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">RFID</label>
+                                        <label>&nbsp;&nbsp;</label>
+                                        <select name="rfid" id="">
+                                            {{#each rfidList }}
+                                            <option value="{{_id}}">
+                                                {{ device }}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>                           
+                            </div>    
+                            <button type="submit" value="Add" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,181 @@
+
+    <div class="container-xl">
+            <div class="table-responsive">
+                {{#if message}}
+                    <h4><b>{{message}}</b></h4>
+                {{else}}
+                    <div id="map" style="width: 1100px; height: 500px;"></div>      
+                {{/if}}
+                <div class="table-wrapper"> 
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2><b>Bus</b></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                <th>Plate</th>
+                                <th>&nbsp;</th>
+                                <th>Seats</th>
+                                <th>Picture</th>
+                            </tr>
+                        </thead>
+                        <tbody>		
+                            <tr>
+                                <td></td>
+                                <td><h5>{{ dataJourney.bus.plate }}</h5></td>
+                                <td>&nbsp;</td>
+                                <td><h5>&nbsp;{{ dataJourney.bus.seats }}</h5></td>
+                                <td><img src="data:image/jpeg;base64,{{dataJourney.bus.picture}}" style="max-width: 150px;"></td>
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>Driver data</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Contact</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Picture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{dataJourney.driver.name}}</td>
+                                <td>{{dataJourney.driver.gender}}</td>
+                                <td>{{dataJourney.driver.contact}}</td>
+                                <td>{{dataJourney.driver.address}}</td>
+                                <td>{{driverAccount.email}}</td>
+                                <td><img src="data:image/jpeg;base64,{{dataJourney.driver.picture}}" style="max-width: 150px;"></td>
+                            </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>Schedule data</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Class</th>
+                            <th>Teacher</th>
+                            <th>Teacher's Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{scheduleData.name}}</td>
+                                <td><span class="birth-date"></span></td>
+                                <td>{{classData.name}}</td>
+                                <td>{{classData.teacher.name}}</td>
+                                <td><img src="data:image/jpeg;base64,{{classData.teacher.picture}}" style="max-width: 150px;"></td>
+                            </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>Student List</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Student's Image</th>
+                            <th>Supervisor</th>
+                            <th>Contact</th>
+                            <th>Supervisor's Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each studentList}}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{name}}</td>
+                                <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
+                                <td>{{supervisor.name}}</td>
+                                <td>{{supervisor.contact}}</td>
+                                <td><img src="data:image/jpeg;base64,{{supervisor.picture}}" style="max-width: 150px;"></td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                </div>
+            </div>        
+        </div>
+  
+  <script type="text/javascript">
+    var locations = [
+      ['Your location', {{dataGPS.latitude}}, {{dataGPS.longitude}}, 1],
+      ['Greenwich', 21.02397632928401, 105.79033476689675, 2]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: new google.maps.LatLng({{dataGPS.latitude}},{{dataGPS.longitude}}),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+   
+
+  </script>
+  <script>
+        // Format birth date and insert it into the corresponding <span> element
+        var birthDate = new Date("{{scheduleData.date}}");
+        var formattedBirthDate = birthDate.toLocaleDateString("en-US", {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+        document.querySelector('.birth-date').innerText = formattedBirthDate;
+    </script>

@@ -1,0 +1,43 @@
+
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <div class="contact-form">
+                        <h1>Enter Bus Detail</h1>
+                        {{#if InputErrors}}
+                            <div>
+                                <p>Please correct the following errors:</p>
+                                <ul>
+                                    {{#each InputErrors}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        {{/if}}
+
+                        <form action="" method="post" enctype="multipart/form-data"> 
+                            <div class="form-group">
+                                <label for="inputSubject">Plate</label>
+                                <input type="text" class="form-control" name="plate" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">Seats</label>
+                                        <input type="number" class="form-control" name="seats" required>
+                                    </div>
+                                </div>    
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">File</label>
+                                        <input class="form-control" type="file" name="picture" accept="image/*" required>
+                                    </div>
+                                </div>             
+                            </div>      
+                            
+                            <button type="submit" value="Add" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

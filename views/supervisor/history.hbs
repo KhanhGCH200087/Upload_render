@@ -1,0 +1,59 @@
+
+        <div class="container-xl">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                               <h2><b>Date: {{dateResult}}</b></h2>
+                                <form action="/supervisor/getHistory" method="post">
+                                    <input type="date" id="contact" class="form-control" name="date" required>
+                                    <input type="hidden" id="contact" class="form-control" name="studentId" value="{{studentId}}">
+                                    <button type="submit" value="Add" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Find</button>
+                                </form>
+                                {{#if message}}
+                                    <h3><b>{{message}}</b></h3>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="map" style="width: 1100px; height: 500px;"></div>
+    
+            </div>        
+        </div>
+
+    <script type="text/javascript">
+    var locations = [
+      ['Greenwich', 21.02397632928401, 105.79033476689675, 2],
+      {{#each StudentRecordDate}}
+            ['{{time}}', {{latitude}}, {{longitude}}, 3],
+      {{/each}}
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: new google.maps.LatLng(21.02397632928401, 105.79033476689675),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+   
+
+  </script>

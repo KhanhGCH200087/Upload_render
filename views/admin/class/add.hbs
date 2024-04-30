@@ -1,0 +1,47 @@
+
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <div class="contact-form">
+                        <h1>Enter Class Detail</h1>
+                        {{#if InputErrors}}
+                            <div>
+                                <p>Please correct the following errors:</p>
+                                <ul>
+                                    {{#each InputErrors}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        {{/if}}
+                        {{#if message}}
+                           <p>{{message}}</p>
+                        {{/if}}
+
+                        <form action="" method="post" enctype="multipart/form-data"> 
+                            <div class="form-group">
+                                <label for="inputSubject">Name</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">Teacher</label>
+                                        <label>&nbsp;&nbsp;</label>
+                                        <select name="teacher" id="">
+                                            {{#each teacherList }}
+                                            <option value="{{_id}}">
+                                                {{ name }}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>     
+                            </div>      
+                            
+                            <button type="submit" value="Edit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

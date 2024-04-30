@@ -1,0 +1,12 @@
+<form action="" method="post"  enctype="multipart/form-data">
+   <h1>Edit bus</h1>
+    Plate: <input type="text" name="plate" required value="{{ bus.plate }}">
+   <br><br>
+    Seats: <input type="number" name="seats" required value="{{ bus.seats }}">
+   <br><br>
+   Image: <input type="file" name="picture" required value="{{ bus.image }}">
+   <br><br>
+   <img src="{{ product.image }}" alt="" width="120" height="120">
+   <br><br>
+   <input class="btn" type="submit" value="Edit">
+</form>

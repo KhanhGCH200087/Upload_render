@@ -1,0 +1,53 @@
+
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>List of Driver</b></h2>
+                            {{#if message}}
+                                <h4><b>{{message}}</b></h4>
+                            {{/if}}
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/driver/add" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Driver</span></a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Contact</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Picture</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each driverList}}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{name}}</td>
+                                <td>{{gender}}</td>
+                                <td>{{contact}}</td>
+                                <td>{{address}}</td>
+                                <td>{{account.email}}</td>
+                                <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
+                                <td>
+                                    <a href="/driver/edit/{{_id}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="/driver/delete/{{_id}}" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                           
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

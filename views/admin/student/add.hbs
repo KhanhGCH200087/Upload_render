@@ -1,0 +1,72 @@
+
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <div class="contact-form">
+                        <h1>Enter Student Data</h1>
+                        {{#if InputErrors}}
+                            <div>
+                                <p>Please correct the following errors:</p>
+                                <ul>
+                                    {{#each InputErrors}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        {{/if}}
+
+                        <form action="" method="post" enctype="multipart/form-data"> 
+                            <div class="form-group">
+                                <label for="inputSubject">Name</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSubject">RFID</label>
+                                <input type="text" class="form-control" name="RFID" required>
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputName">Gender</label>
+                                    <label><input type="radio" name="gender" value="Male">Male</label> 
+                                    <label><input type="radio" name="gender" value="Female">Female</label>          
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">File</label>
+                                        <input class="form-control" type="file" name="picture" accept="image/*">
+                                    </div>
+                                </div>             
+                            </div> 
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="inputName">Class</label>
+                                    <label>&nbsp;&nbsp;</label>
+                                    <select name="class" id="">
+                                        {{#each classList }}
+                                        <option value="{{_id}}">
+                                            {{ name }}
+                                        </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="inputName">Supervisor</label>
+                                    <label>&nbsp;&nbsp;</label>
+                                    <select name="supervisor" id="">
+                                        {{#each supervisorList }}
+                                        <option value="{{_id}}">
+                                            {{ name }}
+                                        </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>  
+                            
+                            <button type="submit" value="Add" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

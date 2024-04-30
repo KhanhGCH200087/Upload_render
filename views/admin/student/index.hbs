@@ -1,0 +1,57 @@
+
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>List of Student</b></h2>
+                            {{#if message}}
+                                <h4><b>{{message}}</b></h4>
+                            {{/if}}
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/student/add" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Student</span></a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Picture</th>
+                            <th>RFID</th>
+                            <th>Class</th>
+                            <th>Supervisor</th>
+                            <th>Supervisor's Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each studentList}}
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{name}}</td>
+                                <td>{{gender}}</td>
+                                <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
+                                <td>{{RFID}}</td>
+                                <td>{{class.name}}</td>
+                                <td>{{supervisor.name}}</td>
+                                <td><img src="data:image/jpeg;base64,{{supervisor.picture}}" style="max-width: 150px;"></td>
+                                <td>
+                                    <a href="/student/edit/{{_id}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="/student/delete/{{_id}}" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <a href="/student/supervisorData/{{supervisor._id}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                </td>
+                                <td></td>
+                            </tr>
+                           
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

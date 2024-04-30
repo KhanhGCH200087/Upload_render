@@ -1,0 +1,39 @@
+
+        <div class="container-xl">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2><b>List of Bus</b></h2>
+                                {{#if message}}
+                                    <h4><b>{{message}}</b></h4>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                <th>Role</th>
+                                <th>&nbsp;</th>
+                                <th>Descriptions</th>
+                                <td>&nbsp;</td>      
+                            </tr>
+                        </thead>
+                        <tbody>		
+                            {{#each roleList}}
+                                <tr>
+                                    <td></td>
+                                    <td><h4>{{ role }}</h4></td>
+                                    <td>&nbsp;</td>
+                                    <td><h4>{{ description }}</h4></td>
+                                    <td>&nbsp;</td>
+                                </tr> 
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>        
+        </div>

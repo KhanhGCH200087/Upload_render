@@ -1,0 +1,62 @@
+
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <div class="contact-form">
+                        <h1>Enter Schedule Detail</h1>
+                        {{#if InputErrors}}
+                            <div>
+                                <p>Please correct the following errors:</p>
+                                <ul>
+                                    {{#each InputErrors}}
+                                        <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        {{/if}}
+                        {{#if message}}
+                           <p>{{message}}</p>
+                        {{/if}}
+
+                        <form action="" method="post"> 
+                            <div class="form-group">
+                                <label for="inputSubject">Name</label>
+                                <input type="text" class="form-control" name="name" value="{{schedule.name}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSubject">Date : <span class="birth-date"></span></label>
+                                <input type="date" class="form-control" name="date" >
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="inputName">Class</label>
+                                        <label>&nbsp;&nbsp;</label>
+                                        <select name="classes" id="">
+                                            {{#each classList }}
+                                            <option value="{{_id}}">
+                                                {{ name }}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>     
+                            </div>      
+                            
+                            <button type="submit" value="Edit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>Add New</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        // Format birth date and insert it into the corresponding <span> element
+        var birthDate = new Date("{{schedule.date}}");
+        var formattedBirthDate = birthDate.toLocaleDateString("en-US", {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+        document.querySelector('.birth-date').innerText = formattedBirthDate;
+    </script>

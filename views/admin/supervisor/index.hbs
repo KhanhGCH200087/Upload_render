@@ -1,0 +1,55 @@
+
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2><b>List of Supervisor</b></h2>
+                            {{#if message}}
+                                <h4><b>{{message}}</b></h4>
+                            {{/if}}
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/supervisor/add" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Supervisor</span></a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Address</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Email</th>
+                            <th>Picture</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each supervisorList}}
+                            <tr>
+                                
+                                <td>{{name}}</td>
+                                <td>{{contact}}</td>
+                                <td>{{address}}</td>
+                                <td>{{latitude}}</td>
+                                <td>{{longitude}}</td>
+                                <td>{{account.email}}</td>
+                                <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
+                                <td>
+                                    <a href="/supervisor/edit/{{_id}}" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="/supervisor/delete/{{_id}}" class="delete"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                           
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
