@@ -1,142 +1,142 @@
-{{!-- 
+
     <div class="container-xl">
             <div class="table-responsive">
                 {{#if message}}
                     <h4><b>{{message}}</b></h4>
                 {{else}}
                     <div id="map" style="width: 1100px; height: 500px;"></div>      
-                {{/if}}
-                <div class="table-wrapper"> 
+                    <div class="table-wrapper"> 
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2><b>Bus</b></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th>Plate</th>
+                                    <th>&nbsp;</th>
+                                    <th>Seats</th>
+                                    <th>Picture</th>
+                                </tr>
+                            </thead>
+                            <tbody>		
+                                <tr>
+                                    <td></td>
+                                    <td><h5>{{ dataJourney.bus.plate }}</h5></td>
+                                    <td>&nbsp;</td>
+                                    <td><h5>&nbsp;{{ dataJourney.bus.seats }}</h5></td>
+                                    <td><img src="data:image/jpeg;base64,{{dataJourney.bus.picture}}" style="max-width: 150px;"></td>
+                                </tr> 
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2><b>Bus</b></h2>
+                                <h2><b>Driver data</b></h2>
                             </div>
                         </div>
                     </div>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                <th>Plate</th>
                                 <th>&nbsp;</th>
-                                <th>Seats</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Contact</th>
+                                <th>Address</th>
+                                <th>Email</th>
                                 <th>Picture</th>
                             </tr>
                         </thead>
-                        <tbody>		
-                            <tr>
-                                <td></td>
-                                <td><h5>{{ dataJourney.bus.plate }}</h5></td>
-                                <td>&nbsp;</td>
-                                <td><h5>&nbsp;{{ dataJourney.bus.seats }}</h5></td>
-                                <td><img src="data:image/jpeg;base64,{{dataJourney.bus.picture}}" style="max-width: 150px;"></td>
-                            </tr> 
+                        <tbody>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>{{dataJourney.driver.name}}</td>
+                                    <td>{{dataJourney.driver.gender}}</td>
+                                    <td>{{dataJourney.driver.contact}}</td>
+                                    <td>{{dataJourney.driver.address}}</td>
+                                    <td>{{driverAccount.email}}</td>
+                                    <td><img src="data:image/jpeg;base64,{{dataJourney.driver.picture}}" style="max-width: 150px;"></td>
+                                </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><b>Driver data</b></h2>
+                    </div>
+                    <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2><b>Schedule data</b></h2>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>Name</th>
-                            <th>Gender</th>
-                            <th>Contact</th>
-                            <th>Address</th>
-                            <th>Email</th>
-                            <th>Picture</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <table class="table table-striped table-hover">
+                        <thead>
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>{{dataJourney.driver.name}}</td>
-                                <td>{{dataJourney.driver.gender}}</td>
-                                <td>{{dataJourney.driver.contact}}</td>
-                                <td>{{dataJourney.driver.address}}</td>
-                                <td>{{driverAccount.email}}</td>
-                                <td><img src="data:image/jpeg;base64,{{dataJourney.driver.picture}}" style="max-width: 150px;"></td>
+                                <th>&nbsp;</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Class</th>
+                                <th>Teacher</th>
+                                <th>Teacher's Image</th>
                             </tr>
-                    </tbody>
-                </table>
-                </div>
-                <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><b>Schedule data</b></h2>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>{{scheduleData.name}}</td>
+                                    <td><span class="birth-date"></span></td>
+                                    <td>{{classData.name}}</td>
+                                    <td>{{classData.teacher.name}}</td>
+                                    <td><img src="data:image/jpeg;base64,{{classData.teacher.picture}}" style="max-width: 150px;"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2><b>Student List</b></h2>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Class</th>
-                            <th>Teacher</th>
-                            <th>Teacher's Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>{{scheduleData.name}}</td>
-                                <td><span class="birth-date"></span></td>
-                                <td>{{classData.name}}</td>
-                                <td>{{classData.teacher.name}}</td>
-                                <td><img src="data:image/jpeg;base64,{{classData.teacher.picture}}" style="max-width: 150px;"></td>
+                                <th>&nbsp;</th>
+                                <th>Name</th>
+                                <th>Student's Image</th>
+                                <th>Supervisor</th>
+                                <th>Contact</th>
+                                <th>Supervisor's Image</th>
                             </tr>
-                    </tbody>
-                </table>
-                </div>
-                <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><b>Student List</b></h2>
-                        </div>
+                        </thead>
+                        <tbody>
+                            {{#each studentList}}
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>{{name}}</td>
+                                    <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
+                                    <td>{{supervisor.name}}</td>
+                                    <td>{{supervisor.contact}}</td>
+                                    <td><img src="data:image/jpeg;base64,{{supervisor.picture}}" style="max-width: 150px;"></td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>Name</th>
-                            <th>Student's Image</th>
-                            <th>Supervisor</th>
-                            <th>Contact</th>
-                            <th>Supervisor's Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each studentList}}
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>{{name}}</td>
-                                <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
-                                <td>{{supervisor.name}}</td>
-                                <td>{{supervisor.contact}}</td>
-                                <td><img src="data:image/jpeg;base64,{{supervisor.picture}}" style="max-width: 150px;"></td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-                </div>
+                {{/if}}
             </div>        
         </div>
   
-  <script type="text/javascript">
+  {{!-- <script type="text/javascript">
     var locations = [
       ['Your location', {{dataGPS.latitude}}, {{dataGPS.longitude}}, 1],
       ['Greenwich', 21.02397632928401, 105.79033476689675, 2]
@@ -167,7 +167,89 @@
     }
    
 
-  </script>
+  </script> --}}
+
+     {{!-- <script>
+        var locations = [
+            ['Your location', {{dataGPS.latitude}}, {{dataGPS.longitude}}, 1],
+            ['Greenwich', 21.02397632928401, 105.79033476689675, 2]
+            ];
+
+        var map = L.map('map').setView([{{dataGPS.latitude}}, {{dataGPS.longitude}}], 18);
+        mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ' + mapLink + ' Contributors',
+                maxZoom: 18,
+        }).addTo(map);
+
+        for (var i = 0; i < locations.length; i++) {
+        marker = new L.marker([locations[i][1], locations[i][2]])
+            .bindPopup(locations[i][0])
+            .addTo(map);
+        }
+     </script> --}}
+
+<script>
+    var school_locations = [['Greenwich', 21.02397632928401, 105.79033476689675, 2]];
+    var car_locations = [['{{ dataJourney.bus.plate }}', {{dataGPS.latitude}}, {{dataGPS.longitude}}, 1]];
+    var student_locations = [
+        {{#each studentList}}
+            ['{{name}} / {{supervisor.name}}', {{supervisor.latitude}}, {{supervisor.longitude}}, 3]
+        {{/each}}
+    ];
+
+    var map = L.map('map').setView([{{dataGPS.latitude}}, {{dataGPS.longitude}}], 18);
+    mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 20,
+    }).addTo(map);
+
+    for (var i = 0; i < car_locations.length; i++) {
+        var carIcon = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/2940/2940710.png',
+            iconSize: [50, 50], // Size of the icon
+            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        car_marker = new L.marker([car_locations[i][1], car_locations[i][2]], {icon: carIcon})
+            .bindPopup(car_locations[i][0])
+            .addTo(map);
+    }
+
+    for (var i = 0; i < school_locations.length; i++) {
+        var schoolIcon = L.icon({
+            iconUrl: 'https://www.reminiscencetheatrearchive.org.uk/wp-content/uploads/cms/LOGO_Greenwich_2-658x658.jpg',
+            iconSize: [50, 50], // Size of the icon
+            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        school_marker = new L.marker([school_locations[i][1], school_locations[i][2]], {icon: schoolIcon})
+            .bindPopup(school_locations[i][0])
+            .addTo(map);
+    }
+
+    for (var i = 0; i < student_locations.length; i++) {
+        var studentIcon = L.icon({
+            iconUrl: 'https://substantialclassrooms.org/wp-content/uploads/2018/03/graduate_blue-1024x1024.png',
+            iconSize: [50, 50], // Size of the icon
+            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        student_marker = new L.marker([student_locations[i][1], student_locations[i][2]], {icon: studentIcon})
+            .bindPopup(student_locations[i][0])
+            .addTo(map);
+    }
+
+</script>
+
+    
+
   <script>
         // Format birth date and insert it into the corresponding <span> element
         var birthDate = new Date("{{scheduleData.date}}");
@@ -178,57 +260,6 @@
             day: 'numeric'
         });
         document.querySelector('.birth-date').innerText = formattedBirthDate;
-    </script> --}}
+    </script> 
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
-integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
-crossorigin=""/>
-<!-- Make sure you put this AFTER Leaflet's CSS -->
-<script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
-integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
-crossorigin=""></script>
-<style>
-#map { height: 350px; }
-</style>
-<main>
-<div id="map"></div>
-</main>
-<script>
-const map = L.map('map'); 
-// Initializes map
-map.setView([{{dataGPS.latitude}}, {{dataGPS.longitude}}], 13); 
-// Sets initial coordinates and zoom level
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-maxZoom: 19,
-attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map); 
-// Sets map data source and associates with map
-let marker, circle, zoomed;
-navigator.geolocation.watchPosition(success, error);
-function success(pos) {
-const lat = {{dataGPS.latitude}};  
-const lng = {{dataGPS.longitude}};
-const accuracy = pos.coords.accuracy;
-if (marker) {
-map.removeLayer(marker);
-map.removeLayer(circle);
-}
-// Removes any existing marker and circule (new ones about to be set)
-marker = L.marker([lat, lng]).addTo(map);
-circle = L.circle([lat, lng], { radius: accuracy }).addTo(map);
-// Adds marker to the map and a circle for accuracy
-if (!zoomed) {
-zoomed = map.fitBounds(circle.getBounds()); 
-}
-// Set zoom to boundaries of accuracy circle
-map.setView([lat, lng]);
-// Set map focus to current user position
-}
-function error(err) {
-if (err.code === 1) {
-alert("Please allow geolocation access");
-} else {
-alert("Cannot get current location");
-}
-}
-</script>
+   
