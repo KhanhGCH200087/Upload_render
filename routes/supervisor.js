@@ -365,7 +365,7 @@ router.get('/student/:id', checkSupervisorSession, async(req, res) => {
     
                 if(!checkStudentOnBus){ //trường hợp student ko on bus
                     const studentOnBus = 'No';
-                    const gpsData = {latitude: 21.02397632928401, longitude: 105.79033476689675 };
+                    const gpsData = {device: "Not On Bus", latitude: 21.02397632928401, longitude: 105.79033476689675 };
                     res.render('supervisor/student',{studentData, classData, scheduleData, studentOnBus, gpsData, studentId, layout:'layoutSupervisor'});
                 } else { //trường hợp student on bus
                     const studentOnBus = 'Yes';

@@ -19,6 +19,7 @@
                                 <th>Role</th>
                                 <th>&nbsp;</th>
                                 <th>Descriptions</th>
+                                <th>Action</th>
                                 <td>&nbsp;</td>      
                             </tr>
                         </thead>
@@ -29,6 +30,7 @@
                                     <td><h4>{{ role }}</h4></td>
                                     <td>&nbsp;</td>
                                     <td><h4>{{ description }}</h4></td>
+                                    <td> <a href="/role/edit/{{_id}}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a></td>
                                     <td>&nbsp;</td>
                                 </tr> 
                             {{/each}}

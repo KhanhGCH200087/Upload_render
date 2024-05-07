@@ -5,105 +5,105 @@
                     <h4><b>{{message}}</b></h4>
                 {{else}}
                     <div id="map" style="width: 1100px; height: 500px;"></div>      
-                {{/if}}
-                <div class="table-wrapper"> 
+                    <div class="table-wrapper"> 
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2><b>Bus</b></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th>Plate</th>
+                                    <th>&nbsp;</th>
+                                    <th>Seats</th>
+                                    <th>Picture</th>
+                                </tr>
+                            </thead>
+                            <tbody>		
+                                <tr>
+                                    <td></td>
+                                    <td><h4>{{busData.plate}}</h4></td>
+                                    <td>&nbsp;</td>
+                                    <td><h4>&nbsp;{{busData.seats}}</h4></td>
+                                    <td><img src="data:image/jpeg;base64,{{busData.picture}}" style="max-width: 150px;"></td>
+                                </tr> 
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2><b>Bus</b></h2>
+                                <h2><b>Schedule data</b></h2>
                             </div>
                         </div>
                     </div>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                <th>Plate</th>
                                 <th>&nbsp;</th>
-                                <th>Seats</th>
-                                <th>Picture</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Class</th>
+                                <th>Teacher</th>
+                                <th>Teacher's Image</th>
                             </tr>
                         </thead>
-                        <tbody>		
-                            <tr>
-                                <td></td>
-                                <td><h4>{{ busData.plate }}</h4></td>
-                                <td>&nbsp;</td>
-                                <td><h4>&nbsp;{{ busData.seats }}</h4></td>
-                                <td><img src="data:image/jpeg;base64,{{busData.picture}}" style="max-width: 150px;"></td>
-                            </tr> 
+                        <tbody>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>{{scheduleData.name}}</td>
+                                    <td><span class="birth-date"></span></td>
+                                    <td>{{classData.name}}</td>
+                                    <td>{{teacherData.name}}</td>
+                                    <td><img src="data:image/jpeg;base64,{{teacherData.picture}}" style="max-width: 150px;"></td>
+                                </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><b>Schedule data</b></h2>
+                    </div>
+                    <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2><b>Student List</b></h2>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Class</th>
-                            <th>Teacher</th>
-                            <th>Teacher's Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>{{scheduleData.name}}</td>
-                                <td><span class="birth-date"></span></td>
-                                <td>{{classData.name}}</td>
-                                <td>{{teacherData.name}}</td>
-                                <td><img src="data:image/jpeg;base64,{{teacherData.picture}}" style="max-width: 150px;"></td>
+                                <th>&nbsp;</th>
+                                <th>Name</th>
+                                <th>Student's Image</th>
+                                <th>Supervisor</th>
+                                <th>Contact</th>
+                                <th>Supervisor's Image</th>
                             </tr>
-                    </tbody>
-                </table>
-                </div>
-                <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2><b>Student List</b></h2>
-                        </div>
+                        </thead>
+                        <tbody>
+                            {{#each studentList}}
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>{{name}}</td>
+                                    <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
+                                    <td>{{supervisor.name}}</td>
+                                    <td>{{supervisor.contact}}</td>
+                                    <td><img src="data:image/jpeg;base64,{{supervisor.picture}}" style="max-width: 150px;"></td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
                     </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>Name</th>
-                            <th>Student's Image</th>
-                            <th>Supervisor</th>
-                            <th>Contact</th>
-                            <th>Supervisor's Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each studentList}}
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>{{name}}</td>
-                                <td><img src="data:image/jpeg;base64,{{picture}}" style="max-width: 150px;"></td>
-                                <td>{{supervisor.name}}</td>
-                                <td>{{supervisor.contact}}</td>
-                                <td><img src="data:image/jpeg;base64,{{supervisor.picture}}" style="max-width: 150px;"></td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-                </div>
+                {{/if}}
             </div>        
         </div>
   
-  <script type="text/javascript">
+  {{!-- <script type="text/javascript">
     var locations = [
       ['Greenwich', 21.02397632928401, 105.79033476689675, 2],
       {{#each studentList}}
@@ -136,7 +136,52 @@
     }
    
 
-  </script>
+  </script> --}}
+
+    <script>
+    var school_locations = [['Greenwich', 21.02397632928401, 105.79033476689675, 2]];
+    var student_locations = [
+        {{#each studentList}}
+            ['{{name}} / {{supervisor.name}}', {{supervisor.latitude}}, {{supervisor.longitude}}, 3]
+        {{/each}}
+    ];
+
+    var map = L.map('map').setView([21.02397632928401, 105.79033476689675], 12);
+    mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 20,
+    }).addTo(map);
+
+    for (var i = 0; i < school_locations.length; i++) {
+        var schoolIcon = L.icon({
+            iconUrl: 'https://www.reminiscencetheatrearchive.org.uk/wp-content/uploads/cms/LOGO_Greenwich_2-658x658.jpg',
+            iconSize: [50, 50], // Size of the icon
+            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        school_marker = new L.marker([school_locations[i][1], school_locations[i][2]], {icon: schoolIcon})
+            .bindPopup(school_locations[i][0])
+            .addTo(map);
+    }
+
+    for (var i = 0; i < student_locations.length; i++) {
+        var studentIcon = L.icon({
+            iconUrl: 'https://substantialclassrooms.org/wp-content/uploads/2018/03/graduate_blue-1024x1024.png',
+            iconSize: [30, 30], // Size of the icon
+            iconAnchor: [12, 40], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        student_marker = new L.marker([student_locations[i][1], student_locations[i][2]], {icon: studentIcon})
+            .bindPopup(student_locations[i][0])
+            .addTo(map);
+    }
+
+</script>
+
   <script>
         // Format birth date and insert it into the corresponding <span> element
         var birthDate = new Date("{{scheduleData.date}}");

@@ -207,19 +207,6 @@
             maxZoom: 20,
     }).addTo(map);
 
-    for (var i = 0; i < car_locations.length; i++) {
-        var carIcon = L.icon({
-            iconUrl: 'https://cdn-icons-png.flaticon.com/512/2940/2940710.png',
-            iconSize: [50, 50], // Size of the icon
-            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
-            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
-        });
-
-        car_marker = new L.marker([car_locations[i][1], car_locations[i][2]], {icon: carIcon})
-            .bindPopup(car_locations[i][0])
-            .addTo(map);
-    }
-
     for (var i = 0; i < school_locations.length; i++) {
         var schoolIcon = L.icon({
             iconUrl: 'https://www.reminiscencetheatrearchive.org.uk/wp-content/uploads/cms/LOGO_Greenwich_2-658x658.jpg',
@@ -236,8 +223,8 @@
     for (var i = 0; i < student_locations.length; i++) {
         var studentIcon = L.icon({
             iconUrl: 'https://substantialclassrooms.org/wp-content/uploads/2018/03/graduate_blue-1024x1024.png',
-            iconSize: [50, 50], // Size of the icon
-            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+            iconSize: [30, 30], // Size of the icon
+            iconAnchor: [12, 40], // Point of the icon which will correspond to marker's location
             popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
         });
 
@@ -246,6 +233,18 @@
             .addTo(map);
     }
 
+    for (var i = 0; i < car_locations.length; i++) {
+            var carIcon = L.icon({
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/2940/2940710.png',
+                iconSize: [50, 50], // Size of the icon
+                iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+                popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+            });
+
+            car_marker = new L.marker([car_locations[i][1], car_locations[i][2]], {icon: carIcon})
+                .bindPopup(car_locations[i][0])
+                .addTo(map);
+        }
 </script>
 
     

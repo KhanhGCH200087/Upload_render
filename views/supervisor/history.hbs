@@ -1,29 +1,28 @@
 
-        <div class="container-xl">
-            <div class="table-responsive">
-                <div class="table-wrapper">
-                    <div class="table-title">
-                        <div class="row">
-                            <div class="col-sm-6">
-                               <h2><b>Date: {{dateResult}}</b></h2>
-                                <form action="/supervisor/getHistory" method="post">
-                                    <input type="date" id="contact" class="form-control" name="date" required>
-                                    <input type="hidden" id="contact" class="form-control" name="studentId" value="{{studentId}}">
-                                    <button type="submit" value="Add" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Find</button>
-                                </form>
-                                {{#if message}}
-                                    <h3><b>{{message}}</b></h3>
-                                {{/if}}
-                            </div>
-                        </div>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Date: {{dateResult}}</b></h2>
+                        <form action="/supervisor/getHistory" method="post">
+                            <input type="date" id="contact" class="form-control" name="date" required>
+                            <input type="hidden" id="contact" class="form-control" name="studentId" value="{{studentId}}">
+                            <button type="submit" value="Add" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Find</button>
+                        </form>
+                        {{#if message}}
+                            <h3><b>{{message}}</b></h3>
+                        {{/if}}
                     </div>
                 </div>
-                <div id="map" style="width: 1100px; height: 500px;"></div>
-    
-            </div>        
+            </div>
         </div>
+        <div id="map" style="width: 1100px; height: 500px;"></div>
+    </div>        
+</div>
 
-    <script type="text/javascript">
+    {{!-- <script type="text/javascript">
     var locations = [
       ['Greenwich', 21.02397632928401, 105.79033476689675, 2],
       {{#each StudentRecordDate}}
@@ -56,4 +55,49 @@
     }
    
 
-  </script>
+  </script> --}}
+
+  <script>
+    var school_locations = [['Greenwich', 21.02397632928401, 105.79033476689675, 2]];
+
+    var student_locations = [
+        {{#each StudentRecordDate}}
+            ['{{time}}', {{latitude}}, {{longitude}}, 3],
+        {{/each}}
+    ];
+
+    var map = L.map('map').setView([21.02397632928401, 105.79033476689675], 18);
+    mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 20,
+    }).addTo(map);
+
+    for (var i = 0; i < school_locations.length; i++) {
+        var schoolIcon = L.icon({
+            iconUrl: 'https://www.reminiscencetheatrearchive.org.uk/wp-content/uploads/cms/LOGO_Greenwich_2-658x658.jpg',
+            iconSize: [50, 50], // Size of the icon
+            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        school_marker = new L.marker([school_locations[i][1], school_locations[i][2]], {icon: schoolIcon})
+            .bindPopup(school_locations[i][0])
+            .addTo(map);
+    }
+
+    for (var i = 0; i < student_locations.length; i++) {
+        var studentIcon = L.icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+            iconSize: [30, 30], // Size of the icon
+            iconAnchor: [12, 40], // Point of the icon which will correspond to marker's location
+            popupAnchor: [0, -41] // Point from which the popup should open relative to the iconAnchor
+        });
+
+        student_marker = new L.marker([student_locations[i][1], student_locations[i][2]], {icon: studentIcon})
+            .bindPopup(student_locations[i][0])
+            .addTo(map);
+    }
+
+</script>

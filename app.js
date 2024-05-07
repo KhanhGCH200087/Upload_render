@@ -123,6 +123,9 @@ const RFIDModel = require('./models/RFIDModel');
 const historyRFIDModel = require('./models/historyRFIDModel');
 const StudentModel = require('./models/StudentModel');
 const HistoryModel = require('./models/HistoryModel');
+const SupervisorModel = require('./models/SupervisorModel');
+const AccountModel = require('./models/AccountModel');
+const nodemailer = require('nodemailer');
 
 // Initialize Firebase admin SDK
 admin.initializeApp({
@@ -142,7 +145,6 @@ const gpsData = db.ref('/GPS');
 const rfidData = db.ref('/RFID');
 
 // Listen for changes in Firebase data
-
 gpsData.on('child_added', (snapshot) => {
   const locationdata = snapshot.val();
   const deviceName = snapshot.key;
@@ -252,9 +254,107 @@ function formatTime(date) {
   return `${hours}:${minutes}:${seconds}`;
 }
 
+// rfidData.on('child_added', (snapshot) => {
+//   const rfidData = snapshot.val();
+//   const deviceName = snapshot.key;
+//   // Check if the device already exists in the MongoDB collection
+//   RFIDModel.findOne({ device: deviceName })
+//     .then((existingData) => {
+//       if (existingData) {
+//         // Update existing document
+//         return RFIDModel.findOneAndUpdate(
+//           { device: deviceName },
+//           { $set: { data: rfidData.rfid_data } },
+//           { new: true }
+//         );
+//       } else {
+//         // Create new document
+//         const rfidDataNew = new RFIDModel({
+//           device: deviceName,
+//           data: rfidData.rfid_data
+//         });
+//         return rfidDataNew.save();
+//       }
+//     })
+//     .then(() => console.log('RFID saved/updated in MongoDB'))
+//     .catch((err) => console.error('Error saving/updating RFID data in MongoDB:', err));
+//     historyRFIDModel.findOne({ data: rfidData.rfid_data })
+//     .then((existingData) => {
+//       if (existingData) {
+//         // delete existing document
+//         return historyRFIDModel.findOneAndDelete(
+//           { data: rfidData.rfid_data }
+//         );
+//       } else {
+//         // Create new document
+//         const historyRFIDNew = new historyRFIDModel({
+//           device: deviceName,
+//           data: rfidData.rfid_data
+//         });
+//         return historyRFIDNew.save();
+//       }
+//     })
+//     .then(() => console.log('RFID saved/deleted in MongoDB'))
+//     .catch((err) => console.error('Error saving/deleting RFID data in MongoDB:', err));
+// });
+
+// rfidData.on('child_changed', (snapshot) => {
+//   const rfidData = snapshot.val();
+//   const deviceName = snapshot.key;
+//   const checkData = rfidData.rfid_data;
+//   const updateData = {  // Create a plain JavaScript object for update
+//     data: rfidData.rfid_data
+//   };
+
+//   // Find the corresponding document in MongoDB and update it
+//   RFIDModel.findOneAndUpdate(
+//     { device: deviceName },
+//     { $set: updateData }, // Pass the update object here
+//     { new: true, upsert: true }
+//   )
+//   .then(() => console.log('RFID Data updated in MongoDB'))
+//   .catch((err) => console.error('Error updating RFID data in MongoDB:', err));
+
+//   historyRFIDModel.findOne({ data: checkData})
+//   .then((existingData) => {
+//     if (existingData) {
+//       // delete existing document
+//       return historyRFIDModel.findOneAndDelete(
+//         { data: checkData }
+//       );
+//     } else {
+//       // Create new document
+//       const historyRFIDNew = new historyRFIDModel({
+//         device: deviceName,
+//         data: checkData
+//       });
+//       return historyRFIDNew.save();
+//     }
+//   })
+//   .then(() => console.log('RFID saved/deleted in MongoDB'))
+//   .catch((err) => console.error('Error saving/deleting RFID data in MongoDB:', err));
+
+// });
+
 rfidData.on('child_added', (snapshot) => {
   const rfidData = snapshot.val();
   const deviceName = snapshot.key;
+
+  // Check if the RFID data exists in the Student collection
+StudentModel.findOne({ RFID: rfidData.rfid_data })
+  .then((student) => {
+    if (!student) {
+      console.log(`RFID data ${rfidData.rfid_data} does not exist in the Student collection. Skipping.`);
+      return; // Skip saving the RFID data
+    }
+
+    // If RFID data exists in Student collection, proceed with saving to RFIDModel
+    return saveRFIDData(deviceName, rfidData);
+  })
+  .catch((err) => console.error('Error checking RFID data in Student collection:', err));
+});
+
+function saveRFIDData(deviceName, rfidData) {
   // Check if the device already exists in the MongoDB collection
   RFIDModel.findOne({ device: deviceName })
     .then((existingData) => {
@@ -276,35 +376,56 @@ rfidData.on('child_added', (snapshot) => {
     })
     .then(() => console.log('RFID saved/updated in MongoDB'))
     .catch((err) => console.error('Error saving/updating RFID data in MongoDB:', err));
+
     historyRFIDModel.findOne({ data: rfidData.rfid_data })
     .then((existingData) => {
       if (existingData) {
         // delete existing document
-        return historyRFIDModel.findOneAndDelete(
+        historyRFIDModel.findOneAndDelete(
           { data: rfidData.rfid_data }
         );
+        const RFID_data = rfidData.rfid_data;
+        return sendMailStudentOffBus(RFID_data);
       } else {
         // Create new document
         const historyRFIDNew = new historyRFIDModel({
           device: deviceName,
           data: rfidData.rfid_data
         });
-        return historyRFIDNew.save();
+        const RFID_data = rfidData.rfid_data;
+        historyRFIDNew.save();
+        return sendMailStudentOnBus(RFID_data);
       }
     })
     .then(() => console.log('RFID saved/deleted in MongoDB'))
     .catch((err) => console.error('Error saving/deleting RFID data in MongoDB:', err));
-});
+}
 
 rfidData.on('child_changed', (snapshot) => {
   const rfidData = snapshot.val();
   const deviceName = snapshot.key;
   const checkData = rfidData.rfid_data;
-  const updateData = {  // Create a plain JavaScript object for update
+
+  // Check if the RFID data exists in the Student collection
+  StudentModel.findOne({ RFID: checkData })
+    .then((student) => {
+      if (!student) {
+        console.log(`RFID data ${checkData} does not exist in the Student collection. Skipping.`);
+        return; // Skip updating the RFID data
+      }
+
+      // If RFID data exists in Student collection, proceed with updating RFID data
+      return updateRFIDData(deviceName, rfidData);
+    })
+    .catch((err) => console.error('Error checking RFID data in Student collection:', err));
+});
+
+function updateRFIDData(deviceName, rfidData) {
+  const updateData = {
     data: rfidData.rfid_data
   };
-
-  // Find the corresponding document in MongoDB and update it
+  const checkData = rfidData.rfid_data;
+  // Update the corresponding document in MongoDB
   RFIDModel.findOneAndUpdate(
     { device: deviceName },
     { $set: updateData }, // Pass the update object here
@@ -317,22 +438,114 @@ rfidData.on('child_changed', (snapshot) => {
   .then((existingData) => {
     if (existingData) {
       // delete existing document
-      return historyRFIDModel.findOneAndDelete(
+      historyRFIDModel.findOneAndDelete(
         { data: checkData }
       );
+      const RFID_data = rfidData.rfid_data;
+      return sendMailStudentOffBus(RFID_data);
     } else {
       // Create new document
       const historyRFIDNew = new historyRFIDModel({
         device: deviceName,
         data: checkData
       });
-      return historyRFIDNew.save();
+      historyRFIDNew.save();
+      const RFID_data = rfidData.rfid_data;
+      return sendMailStudentOnBus(RFID_data);
     }
   })
   .then(() => console.log('RFID saved/deleted in MongoDB'))
   .catch((err) => console.error('Error saving/deleting RFID data in MongoDB:', err));
+}
 
-});
+async function sendMailStudentOnBus(RFID_data) {
+  try {
+    const studentData = await StudentModel.findOne({ RFID: RFID_data });
+    if (!studentData) {
+      console.log('Student data not found for RFID:', RFID_data);
+      return;
+    }
+
+    const supervisorData = await SupervisorModel.findById(studentData.supervisor);
+    if (!supervisorData) {
+      console.log('Supervisor data not found for student:', studentData.name);
+      return;
+    }
+
+    const supervisorAccount = await AccountModel.findById(supervisorData.account);
+    if (!supervisorAccount) {
+      console.log('Account data not found for supervisor:', supervisorData.name);
+      return;
+    }
+
+    const supervisorEmail = supervisorAccount.email;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_GMAIL,
+        pass: process.env.PASSWORD_GMAIL
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_GMAIL,
+      to: supervisorEmail,
+      subject: 'Student: ' + studentData.name + ' is on the bus',
+      text: `Your student is on the bus`
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully to supervisor:', supervisorEmail);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
+
+async function sendMailStudentOffBus(RFID_data) {
+  try {
+    const studentData = await StudentModel.findOne({ RFID: RFID_data });
+    if (!studentData) {
+      console.log('Student data not found for RFID:', RFID_data);
+      return;
+    }
+
+    const supervisorData = await SupervisorModel.findById(studentData.supervisor);
+    if (!supervisorData) {
+      console.log('Supervisor data not found for student:', studentData.name);
+      return;
+    }
+
+    const supervisorAccount = await AccountModel.findById(supervisorData.account);
+    if (!supervisorAccount) {
+      console.log('Account data not found for supervisor:', supervisorData.name);
+      return;
+    }
+
+    const supervisorEmail = supervisorAccount.email;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_GMAIL,
+        pass: process.env.PASSWORD_GMAIL
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_GMAIL,
+      to: supervisorEmail,
+      subject: 'Student: ' + studentData.name + ' is off the bus',
+      text: `Your student is off the bus`
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully to supervisor:', supervisorEmail);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
+
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // catch 404 and forward to error handler

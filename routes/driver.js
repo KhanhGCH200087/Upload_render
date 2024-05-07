@@ -415,7 +415,7 @@ router.get('/journey/:id', checkDriverSession,  async(req, res) => {
         if(driverId == req.session.driver_id){
             if(journeyData) {
                 const busId = journeyData.bus;
-                const busData = BusModel.findById(busId); //thông tin của bus
+                const busData = await BusModel.findById(busId); //thông tin của bus
                 const scheduleId = journeyData.schedule; 
                 const scheduleData = await ScheduleModel.findById(scheduleId); //thông tin của schedule
                 const classId = scheduleData.classes;
@@ -424,9 +424,9 @@ router.get('/journey/:id', checkDriverSession,  async(req, res) => {
                     const teacherId = classData.teacher;
                     const teacherData = await TeacherModel.findById(teacherId); //thông tin teacher
                     const studentList = await StudentModel.find({class: classId}).populate('supervisor'); //danh sách student của class đó
-                    
+                    console.log("Bus Data: ", busData.plate);
                     res.render('driver/journey', {journeyData, busData, scheduleData, classData, teacherData, studentList, layout:'layoutDriver'});
-                } else if (!busData || !scheduleData || !classData || !teacherData || studentList.length === 0) {
+                } else  {
                     console.error("Error:", error);
                     const message = "Some data of this journey is missing";
                     res.render('driver/menu', {message, driverData, journeyList, layout:'layoutDriver'});
