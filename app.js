@@ -380,12 +380,13 @@ function saveRFIDData(deviceName, rfidData) {
     historyRFIDModel.findOne({ data: rfidData.rfid_data })
     .then((existingData) => {
       if (existingData) {
+        const RFID_data = rfidData.rfid_data;
+        sendMailStudentOffBus(RFID_data);
         // delete existing document
-        historyRFIDModel.findOneAndDelete(
+        return historyRFIDModel.findOneAndDelete(
           { data: rfidData.rfid_data }
         );
-        const RFID_data = rfidData.rfid_data;
-        return sendMailStudentOffBus(RFID_data);
+        
       } else {
         // Create new document
         const historyRFIDNew = new historyRFIDModel({
@@ -437,12 +438,13 @@ function updateRFIDData(deviceName, rfidData) {
   historyRFIDModel.findOne({ data: checkData})
   .then((existingData) => {
     if (existingData) {
+      const RFID_data = rfidData.rfid_data;
+      sendMailStudentOffBus(RFID_data);
       // delete existing document
-      historyRFIDModel.findOneAndDelete(
+      return historyRFIDModel.findOneAndDelete(
         { data: checkData }
       );
-      const RFID_data = rfidData.rfid_data;
-      return sendMailStudentOffBus(RFID_data);
+      
     } else {
       // Create new document
       const historyRFIDNew = new historyRFIDModel({

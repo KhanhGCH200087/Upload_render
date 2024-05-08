@@ -136,14 +136,70 @@
             </div>        
         </div>
   
- 
+  {{!-- <script type="text/javascript">
+    var locations = [
+      ['Your location', {{dataGPS.latitude}}, {{dataGPS.longitude}}, 1],
+      ['Greenwich', 21.02397632928401, 105.79033476689675, 2]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: new google.maps.LatLng({{dataGPS.latitude}},{{dataGPS.longitude}}),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+   
+
+  </script> --}}
+
+     {{!-- <script>
+        var locations = [
+            ['Your location', {{dataGPS.latitude}}, {{dataGPS.longitude}}, 1],
+            ['Greenwich', 21.02397632928401, 105.79033476689675, 2]
+            ];
+
+        var map = L.map('map').setView([{{dataGPS.latitude}}, {{dataGPS.longitude}}], 18);
+        mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ' + mapLink + ' Contributors',
+                maxZoom: 18,
+        }).addTo(map);
+
+        for (var i = 0; i < locations.length; i++) {
+        marker = new L.marker([locations[i][1], locations[i][2]])
+            .bindPopup(locations[i][0])
+            .addTo(map);
+        }
+     </script> --}}
 
 <script>
     var school_locations = [['Greenwich', 21.02397632928401, 105.79033476689675, 2]];
     var car_locations = [['{{ dataJourney.bus.plate }}', {{dataGPS.latitude}}, {{dataGPS.longitude}}, 1]];
-    
+    var student_locations = [
+        {{#each studentList}}
+            ['{{name}} / {{supervisor.name}}', {{supervisor.latitude}}, {{supervisor.longitude}}, 3]
+        {{/each}}
+    ];
 
-    var map = L.map('map').setView([{{dataGPS.latitude}}, {{dataGPS.longitude}}], 16);
+    var map = L.map('map').setView([{{dataGPS.latitude}}, {{dataGPS.longitude}}], 18);
     mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
     L.tileLayer(
         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -164,10 +220,6 @@
             .addTo(map);
     }
 
-    {{#each studentList}}
-    var student_locations = [
-        ['{{name}} / {{supervisor.name}}', {{supervisor.latitude}}, {{supervisor.longitude}}, 3]
-    ];
     for (var i = 0; i < student_locations.length; i++) {
         var studentIcon = L.icon({
             iconUrl: 'https://substantialclassrooms.org/wp-content/uploads/2018/03/graduate_blue-1024x1024.png',
@@ -180,7 +232,6 @@
             .bindPopup(student_locations[i][0])
             .addTo(map);
     }
-    {{/each}}
 
     for (var i = 0; i < car_locations.length; i++) {
             var carIcon = L.icon({
