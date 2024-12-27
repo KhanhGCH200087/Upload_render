@@ -51,7 +51,7 @@ app.use(session({
 var mongoose = require('mongoose');
 //1B. set mongodb connection string
 //Note1: Database name: BusIoT
-var database = "mongodb+srv://GCH200087:1@cluster0.tkcln.mongodb.net/BusIoT";
+var database = "";
 //1C. connect to mongodb
 mongoose.connect(database)
   .then(() => console.log('connect to db sucess'))
@@ -130,11 +130,11 @@ const nodemailer = require('nodemailer');
 // Initialize Firebase admin SDK
 admin.initializeApp({
   credential: admin.credential.cert({
-    projectId: "testgps-fd49c",
-    clientEmail: "firebase-adminsdk-xo5t1@testgps-fd49c.iam.gserviceaccount.com",
-    privateKey: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaIF1st39XNS4R\nX6xEN447fWQTcXoYTBfKzn8jseQ5Haaa0x949MlA+fp6UKil+6ptWSro6FYbacAU\nYbaCeamJbrP9nX0lww8WvMEk0ilfD7JmaTwsytCyEvrqlAZ5YmkG+OmCACllPZDV\nxEQAsMDLmPme4siwGadZut9lvA+imcn+ixfRsQZ8QlO04KudIhUIUX8kZ94P6Uqo\ngXeR9IgP2xni6ih+WaDUtceYXg1Sntvwb+ozEeezZiuAYscMXwDe6tqySkFC2qR2\nqfAeK0XSZDWg4LjeKwCgjOS2s66JvAHPLgckJPlAi+O/MeWJINGtLMUjuCJEGaAe\nhMD15R8BAgMBAAECggEAB75rvVcBDQDfqHuTthLy2Gcp4mF+StaIvF57DQgHvi9b\nTCvVS4oFNb//hdAkl0qeplCAFtIIxzhd5VtYC2ceVGQQZ8nrjielUCgArg9NVglM\noBjPAMLCiKU72zrIxWPFBBuveToK6Nk4Bx7Mpemgg+85DXb9APjS2XtU6wZeLRDl\nMbuFKO9OW9g4QxKMZm6gCWLtNSveMa83HDDdhXC+YHt4bSc4S7rIdh+dFpm9NIZj\ndaqv/3+Qx+uydOC4TZR+dZotURb9sfu5POmX9iLzpv7PYksoA/9Goc8eq5JKO8ma\nhCA4AqCK0dpyF2kU+PicKjwmdIbj+AE69rWrELM8sQKBgQD1l6aM+fQd4UDRmvpO\nzdGQi62Exgl6vaJm5kBuv+nB+sRsNQsXQ5ql5nI+uVG2xms9qYMCATXVeW4kSfkU\nekRglKCxaGnHExphy0Sxv3CvxQfRXFPWt+jdJFqagTSQygMp7Wy7v8yc8zMJcvH4\noGzGJ5F8QhOmLhOCe9fY+cdlpwKBgQDjXr7QejxTgAWarcM2HllXcnw6nVVcshEb\nt/zGZyNwtkK8kxAzYW5FgPXeKBbsFY/lt1vHiFEcZ9W7J/rOMQtdTw+ZKIp+xh01\n1hGGlBowBldvcU8o9E9YnqBEC27tQSI3ovU2ikfqyEsRjE3R+5nOeRobxL2ERr6j\nJLusv7a7FwKBgEyNNLEEyH7304iCUjt2FDiGEVQtlo7XxWNlqffbgjWgwNEpx4c8\n31uO9VVv1nSubIcP63IYhntAGoDdPfKQGfgw29Xwwef3oGWTQppVHf7r33/203s+\nYCtuRX+bfpMTJOFQzG/JXTIe7G2pkpr5Bm7Nrp+YyR8nhZVKnQFY+jpJAoGBAK2l\nuo12DYSoDZ+ofaJjY1BJ+164smztAevthHvyYTq/uBBVMNZM3u7uItjcPUVo4lFK\nzCmDjo7nLnCVhBLdmhRVQVBzifJwU/a92vyxN57d+QD/xLk+fSrtWvEc2kcQq5Va\nO3S//1TsS4jHYtewFDOAgdQbWbIgZZAribnRYTlZAoGAGjZD3pneo55ym97/z/vo\n7OqXNcUIhuyFCoycj9t4UZ/4oYEtn36vfTaPG9roNsodsQBb5Gxd7kuYaCn5PACD\nlwaIhVQOUsoYoPF6HWimoYpO9yw4h3BfwisMyFw6BpXPo+l+Lmp4P4Fw766sQ3S2\nZJl6QjUNrTpUNRvrhL/XyT4=\n-----END PRIVATE KEY-----\n"
+    projectId: "",
+    clientEmail: "",
+    privateKey: ""
   }),
-  databaseURL: "https://testgps-fd49c-default-rtdb.firebaseio.com/"
+  databaseURL: ""
 });
 
 // Get a reference to the Firebase database
